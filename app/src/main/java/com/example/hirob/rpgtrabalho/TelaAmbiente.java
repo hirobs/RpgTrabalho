@@ -32,7 +32,7 @@ public class TelaAmbiente extends AppCompatActivity {
         inimigo.setAtkMax(5);
         inimigo.setAtkMin(1);
         inimigo.setDefense(0);
-        inimigo.setGold(0);
+        inimigo.setGold(5);
         inimigo.setJogavel(false);
         inimigo.setNmPersonagem("Inimigo");
         inimigo.setHpTotal(30);
@@ -67,7 +67,14 @@ public class TelaAmbiente extends AppCompatActivity {
             if(hpAtualNovo<=0){
                 texto.setText("Você Morreu");
             }else{
-                texto.setText("Parabéns, você matou o inimigo");
+                personagem.setHpAtual(hpAtualNovo);
+                int hpAtualPersonagem = personagem.getHpAtual();
+                int dinheiroInimigo = inimigo.getGold();
+                personagem.setGold(personagem.getGold()+dinheiroInimigo);
+                texto.setText("Parabéns, você matou o inimigo" +
+                        "\n Você sofreu "+ataqueInimigo+" dano e está com "+hpAtualPersonagem+
+                        "\n Você recebeu "+dinheiroInimigo+" gold e está com "+ personagem.getGold()+" ao total."
+                );
             }
         }
 
