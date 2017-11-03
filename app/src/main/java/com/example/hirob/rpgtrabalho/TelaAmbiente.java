@@ -17,7 +17,7 @@ public class TelaAmbiente extends AppCompatActivity {
         setContentView(R.layout.activity_tela_ambiente);
 
         texto = (TextView) findViewById(R.id.textViewLogs);
-
+        btnCombate = (Button) findViewById(R.id.buttonCombate);
         personagem = new Personagem();
         personagem.setAtkMax(10);
         personagem.setAtkMin(5);
@@ -38,23 +38,41 @@ public class TelaAmbiente extends AppCompatActivity {
         inimigo.setHpTotal(30);
         inimigo.setHpAtual(30);
 
-        btnCombate = (Button) findViewById(R.id.buttonCombate);
-        btnCombate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                batalha();
-            }
-        });
+
+//        btnCombate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                batalha();
+//            }
+//        });
 
     }
     public void batalha(){
         int ataquePersonagem = CalculosRpg.ataque(personagem.getAtkMin(),personagem.getAtkMax(),personagem.getDefense());
         int ataqueInimigo = CalculosRpg.ataque(inimigo.getAtkMin(),inimigo.getAtkMax(),inimigo.getDefense());
-        personagem.setHpAtual(personagem.getHpTotal()-ataqueInimigo);
-        inimigo.setHpAtual(inimigo.getHpTotal()-ataquePersonagem);
-        int hpAtualPersonagem = personagem.getHpAtual();
-        int hpAtualInimigo = inimigo.getHpAtual();
-        texto.setText("Você sofreu "+ataqueInimigo+" dano e está com "+hpAtualPersonagem+
-        "\n Voce deu "+ataquePersonagem + " dano e ele está com "+ hpAtualInimigo);
+        int hpAtualNovo = personagem.getHpAtual()-ataqueInimigo;
+        int hpAtualNovoInimigo = inimigo.getHpAtual()-ataquePersonagem;
+
+        if(hpAtualNovo>0 && hpAtualNovoInimigo>0){
+
+            personagem.setHpAtual(hpAtualNovo);
+            inimigo.setHpAtual(hpAtualNovoInimigo);
+
+            int hpAtualPersonagem = personagem.getHpAtual();
+            int hpAtualInimigo = inimigo.getHpAtual();
+            texto.setText("Você sofreu "+ataqueInimigo+" dano e está com "+hpAtualPersonagem+
+                    "\n Voce deu "+ataquePersonagem + " dano e ele está com "+ hpAtualInimigo);
+
+        }else{
+            if(hpAtualNovo<=0){
+                texto.setText("Você Morreu");
+            }else{
+                texto.setText("Parabéns, você matou o inimigo");
+            }
+        }
+
+            }
+    public void clickBatalha(View v) {
+        batalha();
     }
 }
