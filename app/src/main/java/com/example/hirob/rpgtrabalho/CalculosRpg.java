@@ -12,6 +12,10 @@ public class CalculosRpg {
 
         return rn.nextInt(max-min +1)+ min;
     }
+    public static int inimigo(){
+        Random rn = new Random();
+        return rn.nextInt(3)+1;
+    }
 
 
 }

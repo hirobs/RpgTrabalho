@@ -13,6 +13,8 @@ public class Personagem {
     private boolean jogavel;
     private String itemUm;
     private String itemDois;
+    private int hpTotal;
+    private int hpAtual;
 
     public String getNmPersonagem() {
         return nmPersonagem;
@@ -84,5 +86,21 @@ public class Personagem {
         }else{
             return 0;
         }
+    }
+
+    public int getHpTotal() {
+        return hpTotal;
+    }
+
+    public void setHpTotal(int hpTotal) {
+        this.hpTotal = hpTotal;
+    }
+
+    public int getHpAtual() {
+        return hpAtual;
+    }
+
+    public void setHpAtual(int hpAtual) {
+        this.hpAtual = hpAtual;
     }
 }
