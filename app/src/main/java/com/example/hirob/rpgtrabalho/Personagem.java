@@ -5,9 +5,10 @@ package com.example.hirob.rpgtrabalho;
  */
 
 public class Personagem {
+    private int ID;
     private String nmPersonagem;
     private int atkMax;
-    private int  atkMin;
+    private int atkMin;
     private int defense;
     private int gold;
     private boolean jogavel;
@@ -15,6 +16,28 @@ public class Personagem {
     private String itemDois;
     private int hpTotal;
     private int hpAtual;
+
+    static final String TABLE_NAME = "personagem";
+    static final String COLUMN_NAME_ID = "id";
+    static final String COLUMN_NAME_NOME = "nmPersonagem";
+    static final String COLUMN_NAME_ATKMAX = "atkMax";
+    static final String COLUMN_NAME_ATKMIN = "atkMin";
+    static final String COLUMN_NAME_DEFENSE = "defense";
+    static final String COLUMN_NAME_GOLD = "gold";
+    static final String COLUMN_NAME_JOGAVEL = "jogavel";
+    static final String COLUMN_NAME_ITEMUM = "itemUm";
+    static final String COLUMN_NAME_ITEMDOIS = "itemDois";
+    static final String COLUMN_NAME_HPTOTAL = "hpTotal";
+    static final String COLUMN_NAME_HPATUAL = "hpAtual";
+
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public String getNmPersonagem() {
         return nmPersonagem;
@@ -80,10 +103,10 @@ public class Personagem {
         this.itemDois = itemDois;
     }
 
-    public int intJogavel(){
-        if(jogavel){
+    public int intJogavel() {
+        if (jogavel) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }

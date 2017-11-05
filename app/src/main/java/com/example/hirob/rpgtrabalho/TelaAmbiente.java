@@ -145,7 +145,6 @@ public class TelaAmbiente extends AppCompatActivity {
                 btnCombate.setText("confirmar");
 
             }
-
         }
     }
 
