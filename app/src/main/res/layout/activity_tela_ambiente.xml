@@ -13,7 +13,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="6dp"
-        android:text="TextView"
+        android:text="Olá Aventureiro! O que você deseja fazer?"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"

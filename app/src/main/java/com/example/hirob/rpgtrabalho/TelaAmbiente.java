@@ -55,6 +55,31 @@ public class TelaAmbiente extends AppCompatActivity {
 //        });
 
     }
+    public void clickBotao(View v) {
+        switch(v.getId()){
+            case R.id.buttonCombate: // Se for o botão principal, abre o switch dele
+
+                String btnText = (String) btnCombate.getText();
+                switch (btnText) {
+                    case "explorar": //Se ele explorar, vai procurar um inimigo novo
+                        inimigoNovo();
+                        break;
+                    case "atacar":
+                        batalha();
+                        break;
+                    case "confirmar":
+                        btnCombate.setText("explorar");
+                        texto.setText("Olá Aventureiro! O que você deseja fazer?");
+                        break;
+                }
+                break;
+            case R.id.buttonSim:
+                aceitarCombate();
+                break;
+            case R.id.buttonNao:
+                break;
+        }
+    }
 
     public void inimigoNovo() {
         btnCombate.setVisibility(View.GONE);
@@ -75,10 +100,18 @@ public class TelaAmbiente extends AppCompatActivity {
         btnNao.setVisibility(View.VISIBLE);
     }
 
-    public void batalha() {
+    public void aceitarCombate(){
         btnSim.setVisibility(View.GONE);
         btnNao.setVisibility(View.GONE);
         btnCombate.setVisibility(View.VISIBLE);
+        btnCombate.setText("atacar");
+
+        texto.setText("Voce está com "+ personagem.getHpAtual()+" de vida."+
+                "\nO que você deseja fazer?");
+    }
+
+    public void batalha() {
+
 
         int ataquePersonagem = CalculosRpg.ataque(personagem.getAtkMin(), personagem.getAtkMax(), personagem.getDefense());
         int ataqueInimigo = CalculosRpg.ataque(inimigo.getAtkMin(), inimigo.getAtkMax(), inimigo.getDefense());
@@ -96,16 +129,18 @@ public class TelaAmbiente extends AppCompatActivity {
                     "\n Voce deu " + ataquePersonagem + " dano e ele está com " + hpAtualInimigo);
 
         } else {
+            //Se a sua vida tiver menor que 0 vc morreu
             if (hpAtualNovo <= 0) {
                 texto.setText("Você Morreu");
             } else {
+                //A hp do inimigo está menor que 0, então acabou a luta
                 personagem.setHpAtual(hpAtualNovo);
                 int hpAtualPersonagem = personagem.getHpAtual();
                 int dinheiroInimigo = inimigo.getGold();
                 personagem.setGold(personagem.getGold() + dinheiroInimigo);
-                texto.setText("Parabéns, você matou o inimigo" +
-                        "\n Você sofreu " + ataqueInimigo + " dano e está com " + hpAtualPersonagem +
-                        "\n Você recebeu " + dinheiroInimigo + " gold e está com " + personagem.getGold() + " ao total."
+                texto.setText("Parabéns, você matou o inimigo." +
+                        "\n\nVocê sofreu " + ataqueInimigo + " dano e está com " + hpAtualPersonagem +
+                        "\nVocê recebeu " + dinheiroInimigo + " gold e está com " + personagem.getGold() + " ao total."
                 );
                 btnCombate.setText("confirmar");
 
@@ -114,36 +149,9 @@ public class TelaAmbiente extends AppCompatActivity {
         }
     }
 
-    public void clickBotao(View v) {
-        switch(v.getId()){
-            case R.id.buttonCombate: // Se for o botão principal, abre o switch dele
-
-                String btnText = (String) btnCombate.getText();
-                switch (btnText) {
-                    case "explorar":
-                        inimigoNovo();
-                        break;
-                    case "atacar":
-                        break;
-                    case "confirmar":
-                        break;
-                }
-                break;
-            case R.id.buttonSim:
-                batalha();
-                break;
-            case R.id.buttonNao:
-                break;
-        }
-
-//        case "sim":         //Se ele selecionar sim, vai para a batalha
-//        batalha();
-//        // finish();
-//        break;          //Se ele selecionar não, vai para o explorar de novo
-//        case "não":
-//        Intent intent = getIntent();
-//        finish();
-//        startActivity(intent);
-//        break;
+    public void ambientePrincipal(){
+        btnCombate.setText("explorar");
     }
+
+
 }
