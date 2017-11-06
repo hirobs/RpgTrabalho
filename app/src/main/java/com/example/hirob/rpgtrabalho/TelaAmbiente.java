@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.hirob.rpgtrabalho.db.DBHelper;
+
 public class TelaAmbiente extends AppCompatActivity {
     TextView texto;
     Personagem personagem;
@@ -35,6 +37,14 @@ public class TelaAmbiente extends AppCompatActivity {
         personagem.setNmPersonagem("Hiroshi");
         personagem.setHpTotal(50);
         personagem.setHpAtual(50);
+
+
+//        //TESTEEEEEEEEEEEEEE
+       DBHelper dbHelper = new DBHelper(this);
+        dbHelper.doesDbExist();
+
+
+
 
 //        inimigo = new Personagem();
 //        inimigo.setAtkMax(5);

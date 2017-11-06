@@ -17,18 +17,18 @@ public class Personagem {
     private int hpTotal;
     private int hpAtual;
 
-    static final String TABLE_NAME = "personagem";
-    static final String COLUMN_NAME_ID = "id";
-    static final String COLUMN_NAME_NOME = "nmPersonagem";
-    static final String COLUMN_NAME_ATKMAX = "atkMax";
-    static final String COLUMN_NAME_ATKMIN = "atkMin";
-    static final String COLUMN_NAME_DEFENSE = "defense";
-    static final String COLUMN_NAME_GOLD = "gold";
-    static final String COLUMN_NAME_JOGAVEL = "jogavel";
-    static final String COLUMN_NAME_ITEMUM = "itemUm";
-    static final String COLUMN_NAME_ITEMDOIS = "itemDois";
-    static final String COLUMN_NAME_HPTOTAL = "hpTotal";
-    static final String COLUMN_NAME_HPATUAL = "hpAtual";
+    public static final String TABLE_NAME = "personagem";
+    public static final String COLUMN_NAME_ID = "id";
+    public static final String COLUMN_NAME_NOME = "nmPersonagem";
+    public static final String COLUMN_NAME_ATKMAX = "atkMax";
+    public static final String COLUMN_NAME_ATKMIN = "atkMin";
+    public static final String COLUMN_NAME_DEFENSE = "defense";
+    public static final String COLUMN_NAME_GOLD = "gold";
+    public static final String COLUMN_NAME_JOGAVEL = "jogavel";
+    public static final String COLUMN_NAME_ITEMUM = "itemUm";
+    public static final String COLUMN_NAME_ITEMDOIS = "itemDois";
+    public static final String COLUMN_NAME_HPTOTAL = "hpTotal";
+    public static final String COLUMN_NAME_HPATUAL = "hpAtual";
 
 
     public int getID() {
