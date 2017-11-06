@@ -11,6 +11,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
+//https://stackoverflow.com/questions/9109438/how-to-use-an-existing-database-with-an-android-application
+
+
 public class DataBaseHelper extends SQLiteOpenHelper
 {
     private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
