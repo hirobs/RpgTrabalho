@@ -43,7 +43,7 @@ public class TelaAmbiente extends AppCompatActivity {
        DBHelper dbHelper = new DBHelper(this);
         dbHelper.doesDbExist();
 
-
+//
 
 
 //        inimigo = new Personagem();
