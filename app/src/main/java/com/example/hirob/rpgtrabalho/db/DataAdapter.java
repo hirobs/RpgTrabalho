@@ -21,19 +21,19 @@ public class DataAdapter
         mDbHelper = new DataBaseHelper(mContext);
     }
 
-    public DataAdapter createDatabase() throws SQLException
-    {
-        try
-        {
-            mDbHelper.createDataBase();
-        }
-        catch (IOException mIOException)
-        {
-            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
-            throw new Error("UnableToCreateDatabase");
-        }
-        return this;
-    }
+//    public DataAdapter createDatabase() throws SQLException
+//    {
+//        try
+//        {
+//           // mDbHelper.createDataBase();
+//        }
+//        catch (IOException mIOException)
+//        {
+//            Log.e(TAG, mIOException.toString() + "  UnableToCreateDatabase");
+//            throw new Error("UnableToCreateDatabase");
+//        }
+//        return this;
+//    }
 
     public DataAdapter open() throws SQLException
     {

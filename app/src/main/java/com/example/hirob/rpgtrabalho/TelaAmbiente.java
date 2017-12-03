@@ -1,13 +1,21 @@
 package com.example.hirob.rpgtrabalho;
 
-import android.content.Intent;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.hirob.rpgtrabalho.db.DBHelper;
+import com.example.hirob.rpgtrabalho.db.DataBaseHelper;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class TelaAmbiente extends AppCompatActivity {
     TextView texto;
@@ -40,8 +48,8 @@ public class TelaAmbiente extends AppCompatActivity {
 
 
 //        //TESTEEEEEEEEEEEEEE
-       DBHelper dbHelper = new DBHelper(this);
-        dbHelper.doesDbExist();
+//       DBHelper dbHelper = new DBHelper(this);
+//        dbHelper.doesDbExist();
 
 //
 
@@ -66,6 +74,11 @@ public class TelaAmbiente extends AppCompatActivity {
 
     }
     public void clickBotao(View v) {
+    //////////////////////// TESTEEEEEEEEEEEEEEEEEEE
+        inicializarBancoDeDados();
+
+
+        ////////////////////////////
         switch(v.getId()){
             case R.id.buttonCombate: // Se for o botão principal, abre o switch dele
 
@@ -161,6 +174,63 @@ public class TelaAmbiente extends AppCompatActivity {
     public void ambientePrincipal(){
         btnCombate.setText("explorar");
     }
+
+
+    DataBaseHelper mBancoDeDados;
+    private void inicializarBancoDeDados() {
+        mBancoDeDados = new DataBaseHelper(this);
+
+
+
+
+        File database = getApplicationContext().getDatabasePath("Personagem");
+        //File database = mBancoDeDados.DB_PATH;
+        if (database.exists() == false){
+            mBancoDeDados.getReadableDatabase();
+            if (copiaBanco(this)){
+                Context contexto = getApplicationContext();
+                int duracao = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(contexto, "Copiado com sucesso",duracao);
+                toast.show();
+            }else{
+                Context contexto = getApplicationContext();
+                int duracao = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(contexto, "Não copiou",duracao);
+                toast.show();
+            }
+        }
+
+        Context contexto = getApplicationContext();
+        int duracao = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(contexto, mBancoDeDados.allPessoa().get(1).getNmPersonagem()+"",duracao);
+        toast.show();
+    }
+    private boolean copiaBanco(Context context) {
+        try {
+            InputStream inputStream = context.getAssets().open(DataBaseHelper.DB_NAME);
+            String outFile = DataBaseHelper.DB_PATH + DataBaseHelper.DB_NAME;
+            OutputStream outputStream = new FileOutputStream(outFile);
+            byte[] buff = new byte[1024];
+            int legth = 0;
+            while ((legth = inputStream.read(buff))>0){
+                outputStream.write(buff,0,legth);
+            }
+            outputStream.flush();
+            outputStream.close();
+            return true;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+
 
 
 }
