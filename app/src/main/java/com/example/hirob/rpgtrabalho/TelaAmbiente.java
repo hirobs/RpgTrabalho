@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 public class TelaAmbiente extends AppCompatActivity {
     TextView texto;
@@ -46,6 +47,7 @@ public class TelaAmbiente extends AppCompatActivity {
         personagem.setHpTotal(50);
         personagem.setHpAtual(50);
 
+        inicializarBancoDeDados();
 
 //        //TESTEEEEEEEEEEEEEE
 //       DBHelper dbHelper = new DBHelper(this);
@@ -75,7 +77,7 @@ public class TelaAmbiente extends AppCompatActivity {
     }
     public void clickBotao(View v) {
     //////////////////////// TESTEEEEEEEEEEEEEEEEEEE
-        inicializarBancoDeDados();
+      //  inicializarBancoDeDados();
 
 
         ////////////////////////////
@@ -106,16 +108,21 @@ public class TelaAmbiente extends AppCompatActivity {
 
     public void inimigoNovo() {
         btnCombate.setVisibility(View.GONE);
+        List<Personagem> inimigoLista = mBancoDeDados.allInimigo();
+        int random = CalculosRpg.inimigoNovo(inimigoLista.size());
+        inimigo = inimigoLista.get(random);
 
-        inimigo = new Personagem();
-        inimigo.setAtkMax(5);
-        inimigo.setAtkMin(1);
-        inimigo.setDefense(0);
-        inimigo.setGold(5);
-        inimigo.setJogavel(false);
-        inimigo.setNmPersonagem("Inimigo MAL");
-        inimigo.setHpTotal(30);
-        inimigo.setHpAtual(30);
+//
+//        inimigo = new Personagem();
+//        inimigo.setAtkMax(5);
+//        inimigo.setAtkMin(1);
+//        inimigo.setDefense(0);
+//        inimigo.setGold(5);
+//        inimigo.setJogavel(false);
+//        inimigo.setNmPersonagem("Inimigo MAL");
+//        inimigo.setHpTotal(30);
+//        inimigo.setHpAtual(30);
+
 
         texto.setText("Voce encontrou o " + inimigo.getNmPersonagem() + "." +
                 " Voce deseja batalhar com ele?");

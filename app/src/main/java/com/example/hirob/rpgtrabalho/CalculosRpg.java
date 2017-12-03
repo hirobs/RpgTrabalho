@@ -17,5 +17,10 @@ public class CalculosRpg {
         return rn.nextInt(3)+1;
     }
 
+    public static int inimigoNovo(int numero){
+        Random rn = new Random();
+        return rn.nextInt(numero);
+    }
+
 
 }

@@ -166,15 +166,34 @@ public DataBaseHelper(Context context) {
                     p.setHpTotal(cursor.getInt(9));
                     p.setHpAtual(cursor.getInt(10));
 
-//                    p.setId(cursor.getInt(0));
-//                    p.setNome(cursor.getString(1));
-//                    p.setAltura(cursor.getInt(2));
-//                    p.setPeso(cursor.getInt(3));
-//                    p.setCor(cursor.getString(4));
-//                    p.setHabitat(cursor.getString(5));
-//                    p.settype1(cursor.getString(6));
-//                    p.settype2(cursor.getString(7));
-//                    p.setCaminhoImagem(cursor.getString(8));
+                    listPersonagem.add(p);
+                }while(cursor.moveToNext());
+            }
+        }
+        cursor.close();
+        mDataBase.close();
+        return listPersonagem;
+
+    }
+
+    public List<Personagem> allInimigo(){
+       openDataBase();
+        mDataBase = this.getWritableDatabase();
+        List<Personagem> listPersonagem = new ArrayList<Personagem>();
+        String sql = "SELECT * FROM personagem where jogavel = 0";
+        Cursor cursor = mDataBase.rawQuery(sql,null);
+        if (cursor.getCount()>0){
+            if (cursor.moveToFirst()){
+                do{
+                    Personagem p = new Personagem();
+                    p.setID(cursor.getInt(0));
+                    p.setAtkMax(cursor.getInt(1));
+                    p.setAtkMin(cursor.getInt(2));
+                    p.setGold(cursor.getInt(3));
+                    p.setDefense(cursor.getInt(4));
+                    p.setNmPersonagem(cursor.getString(8));
+                    p.setHpTotal(cursor.getInt(9));
+                    p.setHpAtual(cursor.getInt(10));
 
                     listPersonagem.add(p);
                 }while(cursor.moveToNext());
