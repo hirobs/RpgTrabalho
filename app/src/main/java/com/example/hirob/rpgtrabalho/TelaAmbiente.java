@@ -1,6 +1,7 @@
 package com.example.hirob.rpgtrabalho;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,63 +26,47 @@ public class TelaAmbiente extends AppCompatActivity {
     Button btnCombate;
     Button btnSim;
     Button btnNao;
+    DataBaseHelper mBancoDeDados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_ambiente);
 
+
         texto = (TextView) findViewById(R.id.textViewLogs);
         btnCombate = (Button) findViewById(R.id.buttonCombate);
         btnSim = (Button) findViewById(R.id.buttonSim);
         btnNao = (Button) findViewById(R.id.buttonNao);
 
+        //Verificação personagem
+        if(getIntent().getExtras()!=null){
+            Intent it =getIntent();
+            if (it.getStringExtra("banco").equals("1")) {
+                mBancoDeDados = new DataBaseHelper(this);
+                personagem = mBancoDeDados.pegarPersonagemPronto();
+            }
+       } else {
 
-        personagem = new Personagem();
-        personagem.setAtkMax(10);
-        personagem.setAtkMin(5);
-        personagem.setDefense(0);
-        personagem.setGold(0);
-        personagem.setJogavel(true);
-        personagem.setNmPersonagem("Hiroshi");
-        personagem.setHpTotal(50);
-        personagem.setHpAtual(50);
+            personagem = new Personagem();
+            personagem.setAtkMax(10);
+            personagem.setAtkMin(5);
+            personagem.setDefense(0);
+            personagem.setGold(0);
+            personagem.setJogavel(true);
+            personagem.setNmPersonagem("Hiroshi");
+            personagem.setHpTotal(50);
+            personagem.setHpAtual(50);
 
-        inicializarBancoDeDados();
+            inicializarBancoDeDados();
+        }
 
-//        //TESTEEEEEEEEEEEEEE
-//       DBHelper dbHelper = new DBHelper(this);
-//        dbHelper.doesDbExist();
-
-//
-
-
-//        inimigo = new Personagem();
-//        inimigo.setAtkMax(5);
-//        inimigo.setAtkMin(1);
-//        inimigo.setDefense(0);
-//        inimigo.setGold(5);
-//        inimigo.setJogavel(false);
-//        inimigo.setNmPersonagem("Inimigo");
-//        inimigo.setHpTotal(30);
-//        inimigo.setHpAtual(30);
-
-
-//        btnCombate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                batalha();
-//            }
-//        });
 
     }
+
     public void clickBotao(View v) {
-    //////////////////////// TESTEEEEEEEEEEEEEEEEEEE
-      //  inicializarBancoDeDados();
 
-
-        ////////////////////////////
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.buttonCombate: // Se for o botão principal, abre o switch dele
 
                 String btnText = (String) btnCombate.getText();
@@ -112,17 +97,6 @@ public class TelaAmbiente extends AppCompatActivity {
         int random = CalculosRpg.inimigoNovo(inimigoLista.size());
         inimigo = inimigoLista.get(random);
 
-//
-//        inimigo = new Personagem();
-//        inimigo.setAtkMax(5);
-//        inimigo.setAtkMin(1);
-//        inimigo.setDefense(0);
-//        inimigo.setGold(5);
-//        inimigo.setJogavel(false);
-//        inimigo.setNmPersonagem("Inimigo MAL");
-//        inimigo.setHpTotal(30);
-//        inimigo.setHpAtual(30);
-
 
         texto.setText("Voce encontrou o " + inimigo.getNmPersonagem() + "." +
                 " Voce deseja batalhar com ele?");
@@ -130,13 +104,13 @@ public class TelaAmbiente extends AppCompatActivity {
         btnNao.setVisibility(View.VISIBLE);
     }
 
-    public void aceitarCombate(){
+    public void aceitarCombate() {
         btnSim.setVisibility(View.GONE);
         btnNao.setVisibility(View.GONE);
         btnCombate.setVisibility(View.VISIBLE);
         btnCombate.setText("atacar");
 
-        texto.setText("Voce está com "+ personagem.getHpAtual()+" de vida."+
+        texto.setText("Voce está com " + personagem.getHpAtual() + " de vida." +
                 "\nO que você deseja fazer?");
     }
 
@@ -174,35 +148,41 @@ public class TelaAmbiente extends AppCompatActivity {
                 );
                 btnCombate.setText("confirmar");
 
+
+                mBancoDeDados.salvarPersonagem(personagem);
+                mBancoDeDados.pegarPersonagemPronto().getHpAtual();
+
+                Context contexto = getApplicationContext();
+                int duracao = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(contexto, mBancoDeDados.pegarPersonagemPronto().getHpAtual() + "", duracao);
+                toast.show();
+
+
             }
         }
     }
 
-    public void ambientePrincipal(){
+    public void ambientePrincipal() {
         btnCombate.setText("explorar");
     }
 
 
-    DataBaseHelper mBancoDeDados;
     private void inicializarBancoDeDados() {
         mBancoDeDados = new DataBaseHelper(this);
 
 
-
-
         File database = getApplicationContext().getDatabasePath("Personagem");
-        //File database = mBancoDeDados.DB_PATH;
-        if (database.exists() == false){
+        if (database.exists() == false) {
             mBancoDeDados.getReadableDatabase();
-            if (copiaBanco(this)){
+            if (copiaBanco(this)) {
                 Context contexto = getApplicationContext();
                 int duracao = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(contexto, "Copiado com sucesso",duracao);
+                Toast toast = Toast.makeText(contexto, "Copiado com sucesso", duracao);
                 toast.show();
-            }else{
+            } else {
                 Context contexto = getApplicationContext();
                 int duracao = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(contexto, "Não copiou",duracao);
+                Toast toast = Toast.makeText(contexto, "Não copiou", duracao);
                 toast.show();
             }
         }
@@ -210,9 +190,10 @@ public class TelaAmbiente extends AppCompatActivity {
         Context contexto = getApplicationContext();
         int duracao = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(contexto, mBancoDeDados.allPessoa().get(1).getNmPersonagem()+"",duracao);
+        Toast toast = Toast.makeText(contexto, mBancoDeDados.allPessoa().get(1).getNmPersonagem() + "", duracao);
         toast.show();
     }
+
     private boolean copiaBanco(Context context) {
         try {
             InputStream inputStream = context.getAssets().open(DataBaseHelper.DB_NAME);
@@ -220,8 +201,8 @@ public class TelaAmbiente extends AppCompatActivity {
             OutputStream outputStream = new FileOutputStream(outFile);
             byte[] buff = new byte[1024];
             int legth = 0;
-            while ((legth = inputStream.read(buff))>0){
-                outputStream.write(buff,0,legth);
+            while ((legth = inputStream.read(buff)) > 0) {
+                outputStream.write(buff, 0, legth);
             }
             outputStream.flush();
             outputStream.close();
@@ -236,8 +217,6 @@ public class TelaAmbiente extends AppCompatActivity {
         }
 
     }
-
-
 
 
 }

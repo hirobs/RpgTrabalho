@@ -1,6 +1,8 @@
 package com.example.hirob.rpgtrabalho;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,11 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.hirob.rpgtrabalho.db.DataBaseHelper;
+
 public class MainActivity extends AppCompatActivity {
     private Button botao;
     private Button btnPersonagem1;
     private Button btnPersonagem2;
     private Button btnPersonagem3;
+    private Button resetar;
+    private DataBaseHelper mDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         btnPersonagem1 = (Button) findViewById(R.id.buttonPerso1);
         btnPersonagem2 = (Button) findViewById(R.id.buttonPerso2);
         btnPersonagem3 = (Button) findViewById(R.id.buttonPerso3);
+        resetar = (Button) findViewById(R.id.resetar);
 
 
         btnPersonagem1.setOnClickListener(new View.OnClickListener() {
@@ -53,31 +60,47 @@ public class MainActivity extends AppCompatActivity {
         botao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mostrarMensagem();
+                jogoExistente();
+            }
+        });
+
+        resetar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetJogo();
             }
         });
 
     }
 
-    public void mostrarMensagem(){
-        Personagem personagem = new Personagem();
-        personagem.setAtkMax(10);
-        personagem.setAtkMin(5);
-        personagem.setDefense(0);
-        personagem.setGold(0);
-        personagem.setJogavel(true);
-        personagem.setNmPersonagem("Hiroshi");
+    public void jogoExistente(){
 
+        Intent it = new Intent(MainActivity.this, TelaAmbiente.class);
+        it.putExtra("banco", "1");
+        startActivity(it);
 
+    }
 
-        int ataque = CalculosRpg.ataque(personagem.getAtkMin(),personagem.getAtkMax(),personagem.getDefense());
+    public void resetJogo(){
 
-        Context contexto = getApplicationContext();
-        int duracao = Toast.LENGTH_SHORT;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Você tem certeza que quer resetar o jogo?");
+        mDataBase = new DataBaseHelper(this);
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                mDataBase.resetar();
 
-        Toast toast = Toast.makeText(contexto, ataque+"",duracao);
-        toast.show();
+            }
+        });
 
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 
