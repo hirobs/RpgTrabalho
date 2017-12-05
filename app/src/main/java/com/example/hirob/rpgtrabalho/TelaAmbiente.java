@@ -61,6 +61,7 @@ public class TelaAmbiente extends AppCompatActivity {
             personagem.setHpAtual(50);
 
             inicializarBancoDeDados();
+            mBancoDeDados.salvarPersonagem(personagem);
         }
         btnLoja.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,12 +122,14 @@ public class TelaAmbiente extends AppCompatActivity {
         btnCombate.setVisibility(View.VISIBLE);
         btnCombate.setText("atacar");
 
+        personagem = mBancoDeDados.pegarPersonagemPronto();
+
         texto.setText("Voce está com " + personagem.getHpAtual() + " de vida." +
                 "\nO que você deseja fazer?");
     }
 
     public void batalha() {
-
+        personagem = mBancoDeDados.pegarPersonagemPronto();
 
         int ataquePersonagem = CalculosRpg.ataque(personagem.getAtkMin(), personagem.getAtkMax(), personagem.getDefense());
         int ataqueInimigo = CalculosRpg.ataque(inimigo.getAtkMin(), inimigo.getAtkMax(), inimigo.getDefense());
@@ -154,7 +157,8 @@ public class TelaAmbiente extends AppCompatActivity {
                 int dinheiroInimigo = inimigo.getGold();
                 personagem.setGold(personagem.getGold() + dinheiroInimigo);
                 texto.setText("Parabéns, você matou o inimigo." +
-                        "\n\nVocê sofreu " + ataqueInimigo + " dano e está com " + hpAtualPersonagem +
+                       // "\n\nVocê sofreu " + ataqueInimigo + " dano e está com " + hpAtualPersonagem +
+                        "\n\nVocê está com está com " + hpAtualPersonagem +" de vida"+
                         "\nVocê recebeu " + dinheiroInimigo + " gold e está com " + personagem.getGold() + " ao total."
                 );
                 btnCombate.setText("confirmar");
