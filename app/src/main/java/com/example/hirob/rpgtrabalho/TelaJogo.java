@@ -52,7 +52,7 @@ public class TelaJogo extends AppCompatActivity {
         TextView texto = (TextView) findViewById(R.id.textViewPersonagem);
 
         if(perso == 1){
-            texto.setText("Esse personagem é bom no ataque");
+            texto.setText("Esse personagem é o que possui o maior ataque, porém, baixa defesa");
         }
         if(perso ==2){
             texto.setText("Esse personagem é bom na defesa");

@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TelaJogo" />
-        <activity android:name=".TelaAmbiente"></activity>
+        <activity android:name=".TelaAmbiente" />
+        <activity android:name=".TelaLoja"></activity>
     </application>
 
 </manifest>
