@@ -27,6 +27,7 @@ public class TelaAmbiente extends AppCompatActivity {
     Button btnSim;
     Button btnNao;
     DataBaseHelper mBancoDeDados;
+    Button btnLoja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class TelaAmbiente extends AppCompatActivity {
         btnCombate = (Button) findViewById(R.id.buttonCombate);
         btnSim = (Button) findViewById(R.id.buttonSim);
         btnNao = (Button) findViewById(R.id.buttonNao);
+        btnLoja = (Button) findViewById(R.id.buttonLoja);
 
         //Verificação personagem
         if(getIntent().getExtras()!=null){
@@ -60,6 +62,12 @@ public class TelaAmbiente extends AppCompatActivity {
 
             inicializarBancoDeDados();
         }
+        btnLoja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TelaAmbiente.this, TelaLoja.class));
+            }
+        });
 
 
     }
@@ -79,6 +87,7 @@ public class TelaAmbiente extends AppCompatActivity {
                         break;
                     case "confirmar":
                         btnCombate.setText("explorar");
+                        btnLoja.setVisibility(View.VISIBLE);
                         texto.setText("Olá Aventureiro! O que você deseja fazer?");
                         break;
                 }
@@ -88,11 +97,13 @@ public class TelaAmbiente extends AppCompatActivity {
                 break;
             case R.id.buttonNao:
                 break;
+
         }
     }
 
     public void inimigoNovo() {
         btnCombate.setVisibility(View.GONE);
+        btnLoja.setVisibility(View.GONE);
         List<Personagem> inimigoLista = mBancoDeDados.allInimigo();
         int random = CalculosRpg.inimigoNovo(inimigoLista.size());
         inimigo = inimigoLista.get(random);
